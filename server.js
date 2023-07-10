@@ -3,6 +3,8 @@ const express = require('express');
 const app = express();
 const router = express.Router();
 
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 app.use(router);
 
 router.get('/message', (req, res) => {
@@ -10,7 +12,9 @@ router.get('/message', (req, res) => {
 })
 
 router.post('/message', (req, res) => {
-  res.send('New message added')
+  console.log(req.query);
+  console.log(req.body);
+  res.send(`New message: "${req.body.text}" added successfully!`)
 })
 
 app.listen(3000);
