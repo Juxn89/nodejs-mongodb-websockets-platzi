@@ -1,4 +1,5 @@
 const express = require('express');
+const response = require('./network/response');
 
 const app = express();
 const router = express.Router();
@@ -12,13 +13,27 @@ router.get('/message', (req, res) => {
   res.header({
     "custom-header": "Our custom value"
   })
-  res.send('List of message')
+  response.success(req, res, 'List of messages')
 })
 
 router.post('/message', (req, res) => {
   console.log(req.query);
   console.log(req.body);
-  res.send(`New message: "${req.body.text}" added successfully!`)
+  // res.send(`New message: "${req.body.text}" added successfully!`)
+  response.success(req, res, `New message: "${req.body.text}" added successfully!`, 201);
+})
+
+router.delete('/message', (req, res) => {
+  res.status(201).send({errors: [], body: 'Deleted successfully!'})
+})
+
+router.post('/error', (req, res) => {
+  if(req.query.error === 'ok') {
+    response.error(req, res, 'Simulated error! :(', 400)
+  }
+  else {
+    response.success(req, res, 'Created successfully! :)', 201)
+  }
 })
 
 app.listen(3000);
