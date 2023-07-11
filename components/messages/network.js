@@ -1,15 +1,13 @@
 const express = require('express');
-const response = require('../../network/response');
 const controller = require('./controller')
+const response = require('../../network/response');
 
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  console.log(req.headers)
-  res.header({
-    "custom-header": "Our custom value"
-  })
-  response.success(req, res, 'List of messages')
+  controller.getMessage()
+    .then(messageList => response.success(req, res, messageList, 200) )
+    .catch(err => response.error(req, res, err, 500) )
 })
 
 router.post('/', (req, res) => {
