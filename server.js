@@ -36,6 +36,8 @@ router.post('/error', (req, res) => {
   }
 })
 
+app.use('/app', express.static('public'))
+
 app.listen(3000);
 
 console.log('Application is lintening on http://localhost:3000');
