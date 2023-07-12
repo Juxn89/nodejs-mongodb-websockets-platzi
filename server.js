@@ -1,5 +1,9 @@
 const express = require('express');
+const db = require('./db')
 const router = require('./network/routes')
+
+const URL_DATABASE = `${process.env.MONGO_SERVER}:${process.env.MONGO_PORT}/${process.env.MONGO_DB}`
+db.Connect(URL_DATABASE)
 
 const app = express();
 
