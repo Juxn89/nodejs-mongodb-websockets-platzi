@@ -5,19 +5,19 @@ const response = require('../../network/response');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  const filterMessages = req.query.user || null;
+  const filterUser = req.query.user || null;
 
-  controller.getMessage(filterMessages)
-    .then(messageList => response.success(req, res, messageList, 200) )
+  controller.getUser(filterUser)
+    .then(userList => response.success(req, res, userList, 200) )
     .catch(err => response.error(req, res, err, 500) )
 })
 
 router.post('/', (req, res) => {
-  const {user, message} = req.body;
+  const {name} = req.body;
 
-  controller.addMessage(user, message)
-    .then(fullMessage =>{
-      response.success(req, res, fullMessage, 201);
+  controller.addUser(name)
+    .then(fullUser =>{
+      response.success(req, res, fullUser, 201);
     })
     .catch(err => {
       response.error(req, res, err, 400);
@@ -26,17 +26,17 @@ router.post('/', (req, res) => {
 
 router.patch('/:id', (req, res) => {
   const { id } = req.params;
-  const { message } = req.body;
+  const { name } = req.body;
 
-  controller.updateMessage(id, message)
-    .then(message => response.success(req, res, message, 200))
+  controller.updateUsers(id, name)
+    .then(user => response.success(req, res, user, 200))
     .catch(err => response.error(req, res, err, 500))
 })
 
 router.delete('/:id', (req, res) => {
   const { id } = req.params;
-  controller.deleteMessage(id)
-    .then(message => response.success(req, res, message, 200))
+  controller.deleteUser(id)
+    .then(user => response.success(req, res, user, 200))
     .catch(err => response.error(req, res, err, 500))
 })
 
