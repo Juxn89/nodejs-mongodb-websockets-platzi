@@ -1,15 +1,22 @@
 const store = require("./store");
 
-const addMessage = (user, message) => {
+const addMessage = (chat, user, message, file) => {
   return new Promise((resolve, reject) => {
     if(!user || !message) {
       console.error('[messageController] Incomplete information');
       reject('Incomplete information!');
     }
+
+    let fileUrl = ''
+    if(file)
+      fileUrl = 'http://localhost:3000/app/files' + file.name;
+
     const fullMessage = {
+      chat,
       user,
       message,
-      createAt: new Date()
+      createAt: new Date(),
+      file: fileUrl
     }
 
     store.add(fullMessage)

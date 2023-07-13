@@ -3,6 +3,10 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
 const messageSchema = new Schema({
+  chat: {
+    type: Schema.ObjectId,
+    ref: 'Chat'
+  },
   user: {
     type: Schema.ObjectId,
     ref: 'User',
@@ -12,7 +16,8 @@ const messageSchema = new Schema({
     type: String,
     require: true
   },
-  date: Date  
+  date: Date,
+  file: String
 });
 
 const model = mongoose.model('Message', messageSchema)
