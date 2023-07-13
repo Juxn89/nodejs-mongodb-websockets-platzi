@@ -1,46 +1,27 @@
 const store = require("./store");
 
-const addUser = (name) => {
+const addChat = (users) => {
   return new Promise((resolve, reject) => {
-    if(!name) {
+    if(!users || !Array.isArray(users)) {
       reject('Incomplete information!');
     }
-    const fullUser = {
-      name,
+    const chat = {
+      users,
     }
 
-    store.add(fullUser)
-    resolve(fullUser);
+    store.add(chat)
+    resolve(chat);
   })
 }
 
-const getUser = (filterUser) => {
+const listChats = (userId) => {
   return new Promise((resolve, reject) => {
-    resolve(store.list(filterUser))
+    resolve(store.list(userId))
   });
 }
 
-const updateUsers = (id, user) => {
-  return new Promise(async (resolve, reject) => {
-    if(!id || !user) reject('Incomplete information!')
-
-    const result = await store.update(id, user)
-    resolve(result)
-  })
-}
-
-const deleteUser = (id) => {
-  return new Promise(async (resolve, reject) => {
-    if(!id) reject('Internal error')
-
-    await store.delete(id);
-    resolve('Message deleted successfully!')
-  })
-}
 
 module.exports = {
-  addUser,
-  getUser,
-  updateUsers,
-  deleteUser
+  addChat,
+  listChats
 };

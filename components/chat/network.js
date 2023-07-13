@@ -4,38 +4,22 @@ const response = require('../../network/response');
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  const filterUser = req.query.user || null;
-
-  controller.getUser(filterUser)
-    .then(userList => response.success(req, res, userList, 200) )
-    .catch(err => response.error(req, res, err, 500) )
-})
-
 router.post('/', (req, res) => {
-  const {name} = req.body;
+  const {users} = req.body;
 
-  controller.addUser(name)
-    .then(fullUser =>{
-      response.success(req, res, fullUser, 201);
+  controller.addChat(users)
+    .then(data =>{
+      response.success(req, res, data, 201);
     })
     .catch(err => {
       response.error(req, res, err, 400);
     })
 })
 
-router.patch('/:id', (req, res) => {
-  const { id } = req.params;
-  const { name } = req.body;
+router.get('/:userId', (req, res) => {
+  const { userId } = req.params;
 
-  controller.updateUsers(id, name)
-    .then(user => response.success(req, res, user, 200))
-    .catch(err => response.error(req, res, err, 500))
-})
-
-router.delete('/:id', (req, res) => {
-  const { id } = req.params;
-  controller.deleteUser(id)
+  controller.listChats(userId)
     .then(user => response.success(req, res, user, 200))
     .catch(err => response.error(req, res, err, 500))
 })
