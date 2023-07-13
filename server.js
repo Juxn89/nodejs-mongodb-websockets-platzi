@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const server = require('http').Server(app);
+const cors = require('cors');
 
 const db = require('./db')
 const router = require('./network/routes')
@@ -10,6 +11,7 @@ const NODE_SERVER_PORT = 3000;
 const URL_DATABASE = `${process.env.MONGO_SERVER}:${process.env.MONGO_PORT}/${process.env.MONGO_DB}`
 db.Connect(URL_DATABASE)
 
+app.use(cors())
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
